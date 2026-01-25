@@ -15,3 +15,5 @@ dbt/logs/
 dbt/citibike_project/logs/
 dbt/citibike_project/target/
 dbt/citibike_project/dbt_packages/
+
+dataset-vol
