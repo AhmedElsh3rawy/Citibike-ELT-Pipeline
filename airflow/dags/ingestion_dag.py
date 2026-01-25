@@ -42,7 +42,6 @@ def download_zipped_data(year: int, ti):
 
 def unzip_data(ti):
     zip_path = ti.xcom_pull(task_ids="download_zipped_data", key="return_value")
-    year = ti.xcom_pull(task_ids="download_zipped_data", key="year")
 
     extract_to = f"{DATA_DIR}/"
     os.makedirs(extract_to, exist_ok=True)
@@ -86,17 +85,17 @@ def ingest_data_to_db(ti):
             parse_dates=parse_dates,
             chunksize=CHUNK_SIZE,
             header=0,
+            na_values=["", "NULL", "null", "\\N"],
         )
 
         for chunk in df_iter:
+            chunk.columns = (
+                chunk.columns.str.strip()
+                .str.lower()
+                .str.replace(" ", "_")
+                .str.replace("-", "_")
+            )
             if i == 1 and chunk.index.start == 0:
-                chunk.columns = (
-                    chunk.columns.str.strip()
-                    .str.lower()
-                    .str.replace(" ", "_")
-                    .str.replace("-", "_")
-                )
-
                 chunk.head(0).to_sql(
                     name=TABLE_NAME, con=engine, if_exists="replace", index=False
                 )
