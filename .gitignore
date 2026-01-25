@@ -1,0 +1,17 @@
+# --- Python / OS ---
+airflow/dags/__pycache__/
+*.pyc
+.DS_Store
+.env
+
+# --- Airflow ---
+airflow/logs/
+airflow/plugins/
+airflow/config/
+
+# --- dbt ---
+# Ignore logs and compiled artifacts
+dbt/logs/
+dbt/citibike_project/logs/
+dbt/citibike_project/target/
+dbt/citibike_project/dbt_packages/
