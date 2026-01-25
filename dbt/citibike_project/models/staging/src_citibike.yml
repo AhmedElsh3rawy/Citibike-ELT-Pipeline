@@ -1,0 +1,5 @@
+sources:
+  - name: citibike
+    schema: public
+    tables:
+      - name: raw_trips
