@@ -192,9 +192,9 @@ Citibike-ELT-Pipeline/
 
 This pipeline processes NYC Citi Bike trip data from the official public dataset:
 
-- Source: `https://s3.amazonaws.com/tripdata/`
+- Source: `https://s3.amazonaws.com/tripdata/index.html`
 - Data format: CSV files compressed in annual ZIP archives
-- Current implementation focuses on 2014 data (easily modifiable for other years)
+- Current implementation focuses on **2014** data (easily modifiable for other years)
 
 ## Monitoring and Observability
 
