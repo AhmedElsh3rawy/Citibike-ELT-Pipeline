@@ -214,31 +214,3 @@ This pipeline processes NYC Citi Bike trip data from the official public dataset
 2. **Database connection**: Verify PostgreSQL container is healthy
 3. **Memory issues**: Reduce `CHUNK_SIZE` in ingestion tasks
 4. **Docker volume conflicts**: Clean up existing volumes if needed
-
-### Resetting the Environment
-
-```bash
-docker compose down -v
-docker system prune -f
-docker compose up -d
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make changes with appropriate testing
-4. Submit a pull request with clear documentation
-
-## License
-
-This project is provided as-is for educational and development purposes. The Citi Bike data is governed by NYC Open Data policies.
-
-## Support
-
-For issues and questions:
-
-- Check Airflow logs for DAG execution problems
-- Review dbt logs for transformation errors
-- Verify Docker container status and connectivity
-- Consult Metabase documentation for BI configuration
