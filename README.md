@@ -83,21 +83,37 @@ The pipeline transforms raw Citi Bike trip data into a star schema with the foll
    #  DOCKER_SOCKET_GROUP_ID (run `stat -c '%g' /var/run/docker.sock` to get docker socket group ID)
    ```
 
-3. **Start the services**
+3. **Update sources in `transformation_dag.py`**
+
+   ```python
+    # Make sure it is the absolute path
+    mounts = [
+        Mount(
+            source="**/Citibike-ELT-Pipeline/dbt", # here
+            target="/usr/app",
+            type="bind",
+        ),
+        Mount(
+            source="**/Citibike-ELT-Pipeline/dbt", # here
+            target="/root/.dbt",
+            type="bind",
+        ),
+    ]
+   ```
+
+4. **Install dbt dependencies (first time only)**
+
+   ```bash
+   docker compose run dbt deps
+   ```
+
+5. **Start the services**
 
    ```bash
    docker compose up -d
    ```
 
-4. **Initialize dbt (first time only)**
-
-   ```bash
-   # Credentials and profiles are pre-configured in dbt/profiles.yml
-   docker compose run --workdir /usr/app dbt init citibike_project
-   docker compose run dbt deps # Install dbt dependencies
-   ```
-
-5. **Access the services**
+6. **Access the services**
    - **Airflow UI**: http://localhost:8080
    - **Metabase**: http://localhost:3000
    - **PostgreSQL**: localhost:5432
@@ -210,7 +226,7 @@ This pipeline processes NYC Citi Bike trip data from the official public dataset
 
 ### Common Issues
 
-1. **Permission errors**: Ensure correct `AIRFLOW_UID` in `.env`
+1. **Permission errors**: Ensure correct `AIRFLOW_UID` and `DOCKER_SOCKET_GROUP_ID` in `.env`
 2. **Database connection**: Verify PostgreSQL container is healthy
 3. **Memory issues**: Reduce `CHUNK_SIZE` in ingestion tasks
 4. **Docker volume conflicts**: Clean up existing volumes if needed
