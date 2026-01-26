@@ -226,7 +226,12 @@ This pipeline processes NYC Citi Bike trip data from the official public dataset
 
 ### Common Issues
 
-1. **Permission errors**: Ensure correct `AIRFLOW_UID` and `DOCKER_SOCKET_GROUP_ID` in `.env`
+1. **Permission errors**:
+   - Ensure correct `AIRFLOW_UID` and `DOCKER_SOCKET_GROUP_ID` in `.env`
+   - If you encounter permission denied on `/opt/airflow/data` just run:
+     ```bash
+     sudo chown -R $(id -u):$(id -g) ./dataset-vol
+     ```
 2. **Database connection**: Verify PostgreSQL container is healthy
 3. **Memory issues**: Reduce `CHUNK_SIZE` in ingestion tasks
 4. **Docker volume conflicts**: Clean up existing volumes if needed
