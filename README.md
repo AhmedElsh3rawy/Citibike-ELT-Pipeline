@@ -80,7 +80,7 @@ The pipeline transforms raw Citi Bike trip data into a star schema with the foll
    cp .env.sample .env
    # Edit .env to set:
    #  AIRFLOW_UID (run `id -u` to get your user ID)
-   # DOCKER_SOCKET_GROUP_ID (run `stat -c '%g' /var/run/docker.sock` to get docker socket group ID)
+   #  DOCKER_SOCKET_GROUP_ID (run `stat -c '%g' /var/run/docker.sock` to get docker socket group ID)
    ```
 
 3. **Start the services**
@@ -92,6 +92,7 @@ The pipeline transforms raw Citi Bike trip data into a star schema with the foll
 4. **Initialize dbt (first time only)**
 
    ```bash
+   # Credentials and profiles are pre-configured in dbt/profiles.yml
    docker compose run --workdir /usr/app dbt init citibike_project
    docker compose run dbt deps # Install dbt dependencies
    ```
@@ -241,4 +242,3 @@ For issues and questions:
 - Review dbt logs for transformation errors
 - Verify Docker container status and connectivity
 - Consult Metabase documentation for BI configuration
-
