@@ -180,6 +180,7 @@ Citibike-ELT-Pipeline/
 ### Environment Variables (.env)
 
 - `AIRFLOW_UID`: Your system user ID (required for Airflow permissions)
+- `DOCKER_SOCKET_GROUP_ID`: Docker socket group ID (required for Airflow `DockerOperator` to run)
 
 ### Database Configuration
 
