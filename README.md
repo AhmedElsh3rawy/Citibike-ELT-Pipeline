@@ -19,6 +19,7 @@ This project implements a sophisticated data pipeline using the following stack:
 The pipeline transforms raw Citi Bike trip data into a star schema with the following tables:
 
 ### Fact Table
+
 - **`fact_trips`**: Central fact table containing trip details
   - `trip_id` (surrogate key)
   - `tripduration`
@@ -28,6 +29,7 @@ The pipeline transforms raw Citi Bike trip data into a star schema with the foll
   - `user_id` (foreign key)
 
 ### Dimension Tables
+
 - **`dim_station`**: Station information
   - `station_id` (primary key)
   - `station_name`
@@ -42,6 +44,7 @@ The pipeline transforms raw Citi Bike trip data into a star schema with the foll
 ## Pipeline Flow
 
 ### 1. Ingestion DAG (`ingestion_dag.py`)
+
 - Downloads annual Citi Bike trip data from NYC public dataset
 - Extracts ZIP files containing monthly CSV files
 - Loads raw data into PostgreSQL `raw_trips` table
@@ -49,6 +52,7 @@ The pipeline transforms raw Citi Bike trip data into a star schema with the foll
 - Processes data in chunks for memory efficiency
 
 ### 2. Transformation DAG (`transformation_dag.py`)
+
 - Executes dbt transformations using Docker containers
 - Creates dimensional models from raw staging data
 - Implements surrogate key generation for proper star schema
@@ -57,31 +61,39 @@ The pipeline transforms raw Citi Bike trip data into a star schema with the foll
 ## Quick Start
 
 ### Prerequisites
+
 - Docker and Docker Compose
 - Git
 
 ### Setup
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
    cd Citibike-ELT-Pipeline
    ```
 
 2. **Configure environment variables**
+
    ```bash
    cp .env.sample .env
-   # Edit .env file with your AIRFLOW_UID (run `id -u` to get your user ID)
+   # Edit .env to set:
+   #  AIRFLOW_UID (run `id -u` to get your user ID)
+   # DOCKER_SOCKET_GROUP_ID (run `stat -c '%g' /var/run/docker.sock` to get docker socket group ID)
    ```
 
 3. **Start the services**
+
    ```bash
    docker compose up -d
    ```
 
 4. **Initialize dbt (first time only)**
+
    ```bash
    docker compose run --workdir /usr/app dbt init citibike_project
+   docker compose run dbt deps # Install dbt dependencies
    ```
 
 5. **Access the services**
@@ -149,9 +161,11 @@ Citibike-ELT-Pipeline/
 ## Configuration
 
 ### Environment Variables (.env)
+
 - `AIRFLOW_UID`: Your system user ID (required for Airflow permissions)
 
 ### Database Configuration
+
 - PostgreSQL connection details are configured in `compose.yml`
 - dbt profile configured in `dbt/profiles.yml`
 - Supports easy modification for different environments
@@ -159,6 +173,7 @@ Citibike-ELT-Pipeline/
 ## Data Source
 
 This pipeline processes NYC Citi Bike trip data from the official public dataset:
+
 - Source: `https://s3.amazonaws.com/tripdata/`
 - Data format: CSV files compressed in annual ZIP archives
 - Current implementation focuses on 2014 data (easily modifiable for other years)
@@ -173,16 +188,19 @@ This pipeline processes NYC Citi Bike trip data from the official public dataset
 ## Development
 
 ### Adding New Transformations
+
 1. Create new SQL models in `dbt/citibike_project/models/`
 2. Update `dbt_project.yml` if needed
 3. Test with `docker compose run dbt run --models <your_model>`
 
 ### Extending Data Sources
+
 1. Modify `ingestion_dag.py` for new data sources
 2. Update source definitions in `models/staging/src_citibike.yml`
 3. Add appropriate staging models
 
 ### Performance Optimization
+
 - Adjust `CHUNK_SIZE` in ingestion DAG for memory optimization
 - Configure dbt threads in `profiles.yml` for parallel processing
 - Monitor PostgreSQL performance for large datasets
@@ -197,6 +215,7 @@ This pipeline processes NYC Citi Bike trip data from the official public dataset
 4. **Docker volume conflicts**: Clean up existing volumes if needed
 
 ### Resetting the Environment
+
 ```bash
 docker compose down -v
 docker system prune -f
@@ -217,7 +236,9 @@ This project is provided as-is for educational and development purposes. The Cit
 ## Support
 
 For issues and questions:
+
 - Check Airflow logs for DAG execution problems
 - Review dbt logs for transformation errors
 - Verify Docker container status and connectivity
 - Consult Metabase documentation for BI configuration
+
