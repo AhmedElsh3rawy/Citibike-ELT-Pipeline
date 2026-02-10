@@ -115,6 +115,13 @@ The pipeline transforms raw Citi Bike trip data into a star schema with the foll
 
 6. **Access the services**
    - **Airflow UI**: http://localhost:8080
+     - Username: `admin`
+     - Password:
+     ```bash
+     docker exec -it citibike-airflow bash
+     # Inside the container, run:
+     cat simple_auth_manager_passwords.json.generated # to get the admin password
+     ```
    - **Metabase**: http://localhost:3000
    - **PostgreSQL**: localhost:5432
 
