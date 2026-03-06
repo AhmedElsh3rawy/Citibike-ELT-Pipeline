@@ -1,10 +1,10 @@
 # Citibike ELT Pipeline
 
-![Pipeline Diagram](assets/pipeline.png)
-
 A complete ELT (Extract, Load, Transform) pipeline for processing NYC Citi Bike trip data using modern data engineering tools. This pipeline automates the ingestion, transformation, and visualization of Citi Bike data to enable insights into bike-sharing patterns and user behavior.
 
 ## Architecture
+
+![Pipeline Diagram](assets/pipeline.png)
 
 This project implements a sophisticated data pipeline using the following stack:
 
@@ -243,3 +243,5 @@ This pipeline processes NYC Citi Bike trip data from the official public dataset
 2. **Database connection**: Verify PostgreSQL container is healthy
 3. **Memory issues**: Reduce `CHUNK_SIZE` in ingestion tasks
 4. **Docker volume conflicts**: Clean up existing volumes if needed
+
+> **Note**: This project is for **learning purposes only**.
